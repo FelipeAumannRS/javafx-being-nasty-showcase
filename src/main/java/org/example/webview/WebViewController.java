@@ -2,25 +2,30 @@ package org.example.webview;
 
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
-import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
-import lombok.extern.slf4j.Slf4j;
 
 public class WebViewController {
 
-    @FXML
-    private WebView webView;
-    @FXML
-    private TabPane tabPane;
-    @FXML
-    private Tab tab;
+    public TabPane tabPane = new TabPane();
+    private WebView webView = new WebView();
+    private Tab tab = new Tab();
+    private AnchorPane anchorPane = new AnchorPane();
 
-    @FXML
     public void initialize() {
+        AnchorPane.setTopAnchor(webView, 0.0);
+        AnchorPane.setRightAnchor(webView, 0.0);
+        AnchorPane.setBottomAnchor(webView, 0.0);
+        AnchorPane.setLeftAnchor(webView, 0.0);
+
+        anchorPane.getChildren().add(webView);
+        tab.setContent(anchorPane);
+        tabPane.getTabs().add(tab);
+
         final WebEngine webEngine = webView.getEngine();
 
         webEngine.load("https://bindingofisaacrebirth.fandom.com/wiki/Items");
@@ -41,7 +46,7 @@ public class WebViewController {
                     try {
                         if (engine.getLoadWorker().getState() == Worker.State.RUNNING) {
                             System.out.println("Removing frozen tab: " + engine.getLocation());
-                            tab.getTabPane().getTabs().remove(tab);
+                           tabPane.getTabs().remove(tab);
                         } else
                             System.out.println("State changed, operation aborted");
                     } catch (Exception ex) {

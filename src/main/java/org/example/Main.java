@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.example.webview.WebViewController;
 
 public class Main extends Application {
 
@@ -15,9 +16,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("WebView.fxml"));
-        TabPane tabPane = fxmlLoader.load();
-        stage.setScene(new Scene(tabPane));
+        WebViewController webViewController = new WebViewController();
+        stage.setScene(new Scene(webViewController.tabPane));
+        webViewController.initialize();
         stage.show();
     }
 }
